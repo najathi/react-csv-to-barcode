@@ -1,5 +1,7 @@
 import React, { Fragment, useCallback } from "react";
 import { BiArrowBack } from 'react-icons/bi';
+import { TiPrinter } from 'react-icons/ti';
+import Button from "react-bootstrap/esm/Button";
 
 import styles from "./BarcodeScreen.module.scss";
 
@@ -13,28 +15,48 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
         handleSettings(false);
     }, []);
 
+    const handlePrintLabel = useCallback(() => {
+
+    }, [])
+
     return (
 
         <div className="container">
 
             <div className={styles.wrapper}>
 
-                <div
-                    className={styles.backIcon}
-                    onClick={handleBack}
-                >
-                    <BiArrowBack />
+                <div className={styles.header}>
+
+                    <div
+                        className={styles.backIcon}
+                        onClick={handleBack}
+                    >
+                        <BiArrowBack />
+                    </div>
+
+                    <Button
+                        className="text-white"
+                        variant="warning"
+                        onClick={handlePrintLabel}
+                    >
+                        <TiPrinter />&nbsp; Print Label
+                    </Button>
+
                 </div>
 
-                <div className="row">
+            </div>
 
-                    {(selectedRow || []).map((item: any, index: number) => (
-                        <Fragment key={index}>
-                            <Barcode barcode={item.Barcode} />
-                        </Fragment>
-                    ))}
+            <div className="row">
 
-                </div>
+                {(selectedRow || []).map((item: any, index: number) => (
+
+                    <Fragment key={index}>
+
+                        <Barcode barcode={item.Barcode} />
+
+                    </Fragment>
+
+                ))}
 
             </div>
 
