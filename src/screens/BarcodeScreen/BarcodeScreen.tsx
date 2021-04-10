@@ -3,6 +3,8 @@ import { BiArrowBack } from 'react-icons/bi';
 import { TiPrinter } from 'react-icons/ti';
 import Button from "react-bootstrap/esm/Button";
 import { useReactToPrint } from "react-to-print";
+// @ts-ignore
+import Print from "rc-print";
 
 import Barcode from "src/elements/Barcode/Barcode";
 
@@ -15,6 +17,8 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
     const { handleSettings, selectedRow, count } = props;
 
     const componentRef: any = useRef();
+
+    let printDom: any = null;
 
     const data = (selectedRow || [])
         .map((item: any) => {
@@ -34,11 +38,11 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
         handleSettings(false);
     }, []);
 
-    const handlePrintLabel = useReactToPrint({
-        content: () => componentRef.current,
-        // pageStyle: "@page { size: 62mm 29mm}"
-        // pageStyle: "@page { width: 62mm, height: 29mm}"
-    });
+    // const handlePrintLabel = useReactToPrint({
+    //     content: () => componentRef.current,
+    //     // pageStyle: "@page { size: 62mm 29mm}"
+    //     // pageStyle: "@page { width: 62mm, height: 29mm}"
+    // });
 
     return (
 
@@ -55,17 +59,49 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                         <BiArrowBack />
                     </div>
                     <div>
-                        <ComponentToPrint
+                        {/* <ComponentToPrint
                             ref={componentRef}
                             data={data}
-                        />
+                        /> */}
                         <Button
                             className="text-white"
                             variant="warning"
-                            onClick={handlePrintLabel}
+                            // onClick={handlePrintLabel}
+                            onClick={() => {
+                                printDom.onPrint();
+                            }}
                         >
                             <TiPrinter />&nbsp; Print Label
                         </Button>
+
+
+                        <Print
+                            ref={(myPrint: any) => printDom = myPrint} lazyRender isIframe={false}
+                            title="G-Tech Barcode"
+                        >
+                            <div>
+                                {(data || []).map((item: any, index: number) => (
+
+                                    <Fragment key={index}>
+
+                                        {item.map((element: any, key: number) => (
+
+                                            <Fragment key={key}>
+
+                                                <Barcode barcode={element.Barcode} />
+
+                                            </Fragment>
+
+                                        ))}
+
+                                    </Fragment>
+
+                                ))}
+                            </div>
+
+                        </Print>
+
+
                     </div>
 
                 </div>
