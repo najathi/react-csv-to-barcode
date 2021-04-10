@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import DataTable from 'react-data-table-component';
 // @ts-ignore
 import DataTableExtensions from 'react-data-table-component-extensions';
@@ -9,17 +9,15 @@ import { FaBarcode } from 'react-icons/fa';
 import Button from 'react-bootstrap/Button';
 
 import styles from "./TableViewScreen.module.scss";
+import { BiReset } from 'react-icons/bi';
 
 const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
 
-    const { handleSelectedRow, handleSettings, selectedRow } = props;
+    const { handleSelectedRow, handleSettings, selectedRow, columns, data, handleColumns, handleData } = props;
 
     const initialSetting = {
         loading: false,
     };
-
-    const [columns, setColumns] = useState<any>([]);
-    const [data, setData] = useState<any>([]);
 
     const [settings, setSettings] = useState<any>(initialSetting);
 
@@ -36,14 +34,14 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
         const list = [];
         for (let i = 1; i < dataStringLines.length; i++) {
             const row = dataStringLines[i].split(/,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/);
-            if (headers && row.length == headers.length) {
+            if (headers && row.length === headers.length) {
                 const obj: any = {};
                 for (let j = 0; j < headers.length; j++) {
                     let d = row[j];
                     if (d.length > 0) {
-                        if (d[0] == '"')
+                        if (d[0] === '"')
                             d = d.substring(1, d.length - 1);
-                        if (d[d.length - 1] == '"')
+                        if (d[d.length - 1] === '"')
                             d = d.substring(d.length - 2, 1);
                     }
                     if (headers[j]) {
@@ -65,7 +63,7 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
         //     sortable: true
         // }));
 
-        const columns = [
+        const columnsDef = [
             {
                 name: 'Name',
                 selector: 'Name',
@@ -98,8 +96,8 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
             },
         ];
 
-        setData(list);
-        setColumns(columns);
+        handleColumns(columnsDef);
+        handleData(list);
     }
 
     // handle file upload
@@ -115,8 +113,6 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
             const ws = wb.Sheets[wsname];
             /* Convert array of arrays */
             const data = XLSX.utils.sheet_to_csv(ws);
-
-            console.log(data);
 
             processData(data);
         };
@@ -134,7 +130,7 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
         });
 
         setTimeout(() => {
-            setData(orderBy(data, column.selector, sortDirection));
+            handleData(orderBy(data, column.selector, sortDirection));
             setSettings({
                 ...settings,
                 loading: false
@@ -146,7 +142,11 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
         handleSettings(true);
     }, [handleSettings]);
 
-    return (
+    const handleReset = useCallback(() => {
+        window.location.reload();
+    }, []);
+
+    return useMemo(() => (
 
         <div className="container">
 
@@ -162,13 +162,27 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
                 />
 
                 {selectedRow.length > 0 &&
-                    <Button
-                        className="mt-4 mb-4"
-                        variant="primary"
-                        onClick={handleBarcode}
-                    >
-                        <FaBarcode />&nbsp; Barcode
-                    </Button>
+
+                    <div className={styles.buttonContainer}>
+
+                        <Button
+                            className="mt-4 mb-4"
+                            variant="primary"
+                            onClick={handleBarcode}
+                        >
+                            <FaBarcode />&nbsp; Barcode
+                        </Button>
+
+                        <Button
+                            className="mt-4 mb-4"
+                            variant="danger"
+                            onClick={handleReset}
+                        >
+                            <BiReset />&nbsp; Reset
+                        </Button>
+
+
+                    </div>
                 }
 
             </div>
@@ -207,7 +221,7 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
 
         </div>
 
-    );
+    ), [columns, data, selectedRow]);
 };
 
 interface TableViewScreenProps {

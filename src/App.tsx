@@ -13,7 +13,12 @@ export default function App() {
 
     const [settings, setSettings] = useState<any>(initialSetting);
 
+    const [columns, setColumns] = useState<any>([]);
+    const [data, setData] = useState<any>([]);
+
     const [selectedRow, setSelectedRow] = useState<any>([]);
+
+    console.log('selectedRow', selectedRow);
 
     const handleSettingsChange = useCallback((state: boolean) => {
         setSettings({
@@ -26,8 +31,19 @@ export default function App() {
         setSelectedRow(state);
     }, [selectedRow]);
 
+    const handleChangeColumns = useCallback((state: any) => {
+        setColumns(state);
+    }, [columns]);
+
+    const handleChangeData = useCallback((state: any) => {
+        setData(state);
+    }, [data]);
+
     if (settings.barcodeMode) {
-        return <BarcodeScreen handleSettings={handleSettingsChange} />;
+        return (<BarcodeScreen
+            handleSettings={handleSettingsChange}
+            selectedRow={selectedRow}
+        />);
     }
 
     return (
@@ -35,6 +51,10 @@ export default function App() {
             handleSettings={handleSettingsChange}
             handleSelectedRow={handleChangeSelectedRow}
             selectedRow={selectedRow}
+            handleColumns={handleChangeColumns}
+            handleData={handleChangeData}
+            columns={columns}
+            data={data}
         />
     )
 }

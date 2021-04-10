@@ -1,11 +1,13 @@
-import React, { useCallback } from "react";
+import React, { Fragment, useCallback } from "react";
 import { BiArrowBack } from 'react-icons/bi';
 
 import styles from "./BarcodeScreen.module.scss";
 
+import Barcode from "src/elements/Barcode/Barcode";
+
 const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
-    const { handleSettings } = props;
+    const { handleSettings, selectedRow } = props;
 
     const handleBack = useCallback(() => {
         handleSettings(false);
@@ -22,6 +24,16 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                     onClick={handleBack}
                 >
                     <BiArrowBack />
+                </div>
+
+                <div className="row">
+
+                    {(selectedRow || []).map((item: any, index: number) => (
+                        <Fragment key={index}>
+                            <Barcode barcode={item.Barcode} />
+                        </Fragment>
+                    ))}
+
                 </div>
 
             </div>
