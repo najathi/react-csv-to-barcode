@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
+// @ts-ignore
+import DataTableExtensions from 'react-data-table-component-extensions';
 import * as XLSX from 'xlsx';
 import { orderBy } from 'lodash';
 
-import styles from './App.module.scss';
 import Button from 'react-bootstrap/Button';
 
+import styles from './App.module.scss';
+
 export default function App() {
+
+    const initialSetting = {
+        loading: false
+    };
 
     const [columns, setColumns] = useState<any>([]);
     const [data, setData] = useState<any>([]);
 
     const [selectedRow, setSelectedRow] = useState<any>([]);
+
+    const [settings, setSettings] = useState<any>(initialSetting);
+
+    let tableData = {
+        columns,
+        data,
+    };
 
     // process CSV data
     const processData = (dataString: any) => {
@@ -44,10 +58,44 @@ export default function App() {
         }
 
         // prepare columns list from headers
-        const columns = headers.map((c: any) => ({
-            name: c,
-            selector: c,
-        }));
+        // const columns = headers.map((c: any) => ({
+        //     name: c,
+        //     selector: c,
+        //     sortable: true
+        // }));
+
+        const columns = [
+            {
+                name: 'Name',
+                selector: 'Name',
+                sortable: true,
+            },
+            {
+                name: 'Name',
+                selector: 'Name',
+                sortable: true,
+            },
+            {
+                name: 'SKU',
+                selector: 'SKU',
+                sortable: true,
+            },
+            {
+                name: 'Barcode',
+                selector: 'Barcode',
+                sortable: true,
+            },
+            {
+                name: 'Cost',
+                selector: 'Cost',
+                sortable: true,
+            },
+            {
+                name: 'Prize',
+                selector: 'Prize',
+                sortable: true,
+            },
+        ];
 
         setData(list);
         setColumns(columns);
@@ -79,13 +127,17 @@ export default function App() {
     };
 
     const handleSort = (column: any, sortDirection: any) => {
-        // simulate server sort
-        // setLoading(true);
+        setSettings({
+            ...settings,
+            loading: true
+        });
 
-        // instead of setTimeout this is where you would handle your API call.
         setTimeout(() => {
             setData(orderBy(data, column.selector, sortDirection));
-            // setLoading(false);
+            setSettings({
+                ...settings,
+                loading: false
+            });
         }, 100);
     };
 
@@ -117,21 +169,33 @@ export default function App() {
 
             <div className={styles.upload}>
 
-                <DataTable
-                    title="G-Tech Barcode Generator"
-                    pagination
-                    highlightOnHover
-                    columns={columns}
-                    data={data}
-                    theme="solarized"
-                    selectableRows
-                    onSelectedRowsChange={handleChange}
-                    paginationRowsPerPageOptions={[10, 20, 50, 100, 200]}
-                    defaultSortField="id"
-                    defaultSortAsc={false}
-                    onSort={handleSort}
-                // fixedHeader
-                />
+                <DataTableExtensions
+                    {...tableData}
+                    export={false}
+                    print={false}
+                >
+
+                    <DataTable
+                        title="G-Tech Barcode Generator"
+                        pagination
+                        highlightOnHover
+                        columns={columns}
+                        data={data}
+                        theme="solarized"
+                        selectableRows
+                        onSelectedRowsChange={handleChange}
+                        paginationRowsPerPageOptions={[20, 50, 100, 200, data.length || 500]}
+                        defaultSortField="Barcode"
+                        defaultSortAsc={false}
+                        subHeader
+                        striped
+                        paginationComponentOptions={{ rowsPerPageText: 'Rows per page:', rangeSeparatorText: 'of', noRowsPerPage: false, selectAllRowsItem: false, selectAllRowsItemText: 'All' }}
+                        responsive
+                    // dense
+                    // fixedHeader
+                    />
+
+                </DataTableExtensions>
 
             </div>
 

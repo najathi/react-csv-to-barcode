@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-data-table-component-extensions/dist/index.css';
 
 import './styles/web.scss';
 
