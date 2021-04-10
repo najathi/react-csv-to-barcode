@@ -78,8 +78,13 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                         <Print
                             ref={(myPrint: any) => printDom = myPrint} lazyRender isIframe={false}
                             title="G-Tech Barcode"
+                            otherStyle={`
+                            @media print and (width: 62mm) and (height: 29mm){
+                                display: block !important;
+                            }
+                            `}
                         >
-                            <div>
+                            <div className={styles.printSource}>
                                 {(data || []).map((item: any, index: number) => (
 
                                     <Fragment key={index}>
