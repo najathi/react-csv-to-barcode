@@ -11,6 +11,8 @@ const Barcode: React.FC<BarcodeProps> = (props) => {
         value: barcode,
         options: {
             background: '#ffffff',
+            width: 1,
+            height: 60,
         }
     });
 

@@ -1,15 +1,20 @@
-import React, { Fragment, useCallback } from "react";
+import React, { Fragment, useCallback, useRef, PureComponent } from "react";
 import { BiArrowBack } from 'react-icons/bi';
 import { TiPrinter } from 'react-icons/ti';
 import Button from "react-bootstrap/esm/Button";
-
-import styles from "./BarcodeScreen.module.scss";
+import { useReactToPrint } from "react-to-print";
 
 import Barcode from "src/elements/Barcode/Barcode";
+
+import styles from "./BarcodeScreen.module.scss";
+// import ComponentToPrint from "src/elements/ComponentToPrint/ComponentToPrint";
+
 
 const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
     const { handleSettings, selectedRow, count } = props;
+
+    const componentRef: any = useRef();
 
     const data = (selectedRow || [])
         .map((item: any) => {
@@ -29,9 +34,11 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
         handleSettings(false);
     }, []);
 
-    const handlePrintLabel = useCallback(() => {
-        window.print();
-    }, []);
+    const handlePrintLabel = useReactToPrint({
+        content: () => componentRef.current,
+        // pageStyle: "@page { size: 62mm 29mm}"
+        // pageStyle: "@page { width: 62mm, height: 29mm}"
+    });
 
     return (
 
@@ -47,14 +54,19 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                     >
                         <BiArrowBack />
                     </div>
-
-                    <Button
-                        className="text-white"
-                        variant="warning"
-                        onClick={handlePrintLabel}
-                    >
-                        <TiPrinter />&nbsp; Print Label
-                    </Button>
+                    <div>
+                        <ComponentToPrint
+                            ref={componentRef}
+                            data={data}
+                        />
+                        <Button
+                            className="text-white"
+                            variant="warning"
+                            onClick={handlePrintLabel}
+                        >
+                            <TiPrinter />&nbsp; Print Label
+                        </Button>
+                    </div>
 
                 </div>
 
@@ -101,3 +113,40 @@ interface BarcodeScreenProps {
 }
 
 export default BarcodeScreen;
+
+export class ComponentToPrint extends PureComponent<ComponentToPrintProps, ComponentToState> {
+
+    render() {
+        return (
+            <div className={styles.printSource}>
+
+                {(this.props.data || []).map((item: any, index: number) => (
+
+                    <Fragment key={index}>
+
+                        {item.map((element: any, key: number) => (
+
+                            <Fragment key={key}>
+
+                                <Barcode barcode={element.Barcode} />
+
+                            </Fragment>
+
+                        ))}
+
+                    </Fragment>
+
+                ))}
+
+            </div>
+        );
+    }
+};
+
+interface ComponentToPrintProps {
+    [key: string]: any;
+}
+
+interface ComponentToState {
+    [key: string]: any;
+}

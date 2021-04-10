@@ -29,6 +29,7 @@
     "@createnextapp/react-barcode": "^1.1.1",
     "bootstrap": "^4.6.0",
     "eslint": "^6.2.2",
+    "rc-print": "^1.0.4",
     "react": "^16.13.1",
     "react-bootstrap": "^1.5.2",
     "react-data-table-component": "^6.11.7",
@@ -37,6 +38,7 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-to-print": "^2.12.3",
     "styled-components": "^5.2.3",
     "typescript": "~3.7.2",
     "xlsx": "^0.16.9"

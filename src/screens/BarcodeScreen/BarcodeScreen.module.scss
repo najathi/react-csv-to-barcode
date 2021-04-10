@@ -19,3 +19,27 @@
     font-weight: 1rem;
     margin-bottom: 1.2rem;
 }
+
+.printSource {
+    // display: none;
+}
+
+@media print and (width: 62mm) and (height: 29mm) {
+    .printSource {
+        display: block !important;
+    }
+}
+
+@media print and (width: 62mm) and (height: 29mm) {
+    @page {
+        .printSource {
+            display: block !important;
+        }
+    }
+}
+
+@media print and (width: 62mm) and (height: 29mm) {
+    @page {
+        display: block !important;
+    }
+}
