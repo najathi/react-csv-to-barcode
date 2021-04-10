@@ -18,6 +18,8 @@ export default function App() {
 
     const [selectedRow, setSelectedRow] = useState<any>([]);
 
+    const [count, SetCount] = useState(1);
+
     console.log('selectedRow', selectedRow);
 
     const handleSettingsChange = useCallback((state: boolean) => {
@@ -39,10 +41,15 @@ export default function App() {
         setData(state);
     }, [data]);
 
+    const handleChangeCount = useCallback((state: any) => {
+        SetCount(state);
+    }, []);
+
     if (settings.barcodeMode) {
         return (<BarcodeScreen
             handleSettings={handleSettingsChange}
             selectedRow={selectedRow}
+            count={count}
         />);
     }
 
@@ -50,11 +57,13 @@ export default function App() {
         <TableViewScreen
             handleSettings={handleSettingsChange}
             handleSelectedRow={handleChangeSelectedRow}
-            selectedRow={selectedRow}
             handleColumns={handleChangeColumns}
             handleData={handleChangeData}
+            handleCount={handleChangeCount}
+            selectedRow={selectedRow}
             columns={columns}
             data={data}
+            count={count}
         />
     )
 }

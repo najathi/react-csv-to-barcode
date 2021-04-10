@@ -9,15 +9,29 @@ import Barcode from "src/elements/Barcode/Barcode";
 
 const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
-    const { handleSettings, selectedRow } = props;
+    const { handleSettings, selectedRow, count } = props;
+
+    const data = (selectedRow || [])
+        .map((item: any) => {
+
+            let res = [];
+
+            for (let i = 0; i < count; i++) {
+                res.push(item);
+            }
+
+            return [...res];
+        });
+
+    console.log('data', data);
 
     const handleBack = useCallback(() => {
         handleSettings(false);
     }, []);
 
     const handlePrintLabel = useCallback(() => {
-
-    }, [])
+        window.print();
+    }, []);
 
     return (
 
@@ -46,13 +60,30 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
             </div>
 
+            <div>
+
+                <p>Products: <strong>{selectedRow.length}</strong></p>
+                <p>No. copies: <strong>{count}</strong></p>
+                <p>Total copies: <strong>{+count * selectedRow.length}</strong></p>
+                <br />
+
+            </div>
+
             <div className="row">
 
-                {(selectedRow || []).map((item: any, index: number) => (
+                {(data || []).map((item: any, index: number) => (
 
                     <Fragment key={index}>
 
-                        <Barcode barcode={item.Barcode} />
+                        {item.map((element: any, key: number) => (
+
+                            <Fragment key={key}>
+
+                                <Barcode barcode={element.Barcode} />
+
+                            </Fragment>
+
+                        ))}
 
                     </Fragment>
 

@@ -13,7 +13,7 @@ import { BiReset } from 'react-icons/bi';
 
 const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
 
-    const { handleSelectedRow, handleSettings, selectedRow, columns, data, handleColumns, handleData } = props;
+    const { handleSelectedRow, handleSettings, selectedRow, columns, data, handleColumns, handleData, count, handleCount } = props;
 
     const initialSetting = {
         loading: false,
@@ -146,6 +146,10 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
         window.location.reload();
     }, []);
 
+    const handleChangeCount = (e: any) => {
+        handleCount(e.target.value);
+    }
+
     return useMemo(() => (
 
         <div className="container">
@@ -161,17 +165,29 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
                     onChange={handleFileUpload}
                 />
 
-                {selectedRow.length > 0 &&
+                {(selectedRow.length > 0) &&
 
                     <div className={styles.buttonContainer}>
 
-                        <Button
-                            className="mt-4 mb-4"
-                            variant="primary"
-                            onClick={handleBarcode}
-                        >
-                            <FaBarcode />&nbsp; Barcode
+                        <div className={styles.row}>
+
+                            <input
+                                type="number"
+                                className="form-control mr-2"
+                                style={{ width: 100 }}
+                                value={count}
+                                onChange={handleChangeCount}
+                            />
+
+                            <Button
+                                className="mt-4 mb-4 block"
+                                variant="primary"
+                                onClick={handleBarcode}
+                            >
+                                <FaBarcode />&nbsp; Barcode
                         </Button>
+
+                        </div>
 
                         <Button
                             className="mt-4 mb-4"
@@ -221,7 +237,7 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
 
         </div>
 
-    ), [columns, data, selectedRow]);
+    ), [columns, data, selectedRow, count]);
 };
 
 interface TableViewScreenProps {
