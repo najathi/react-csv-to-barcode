@@ -68,10 +68,6 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                         >
                             <TiPrinter />&nbsp; Print Label
                         </Button>
-                        <ComponentToPrint
-                            ref={componentRef}
-                            data={data}
-                        />
 
                         {/* <Print
                             ref={(myPrint: any) => printDom = myPrint} lazyRender isIframe={false}
@@ -120,7 +116,7 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
             </div>
 
-            <div className="row">
+            {/* <div className="row">
 
                 {(data || []).map((item: any, index: number) => (
 
@@ -140,7 +136,12 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
                 ))}
 
-            </div>
+            </div> */}
+
+            <ComponentToPrint
+                ref={componentRef}
+                data={data}
+            />
 
         </div>
 
