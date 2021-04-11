@@ -32,17 +32,16 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
             return [...res];
         });
 
-    console.log('data', data);
-
     const handleBack = useCallback(() => {
         handleSettings(false);
     }, []);
 
-    // const handlePrintLabel = useReactToPrint({
-    //     content: () => componentRef.current,
-    //     // pageStyle: "@page { size: 62mm 29mm}"
-    //     // pageStyle: "@page { width: 62mm, height: 29mm}"
-    // });
+    const handlePrintLabel = useReactToPrint({
+        content: () => componentRef.current,
+        pageStyle: "@page { size: 62mm 29mm}",
+        // pageStyle: "@page { width: 62mm, height: 29mm}"
+        onAfterPrint: () => { handleBack.bind(null) },
+    });
 
     return (
 
@@ -59,52 +58,51 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                         <BiArrowBack />
                     </div>
                     <div>
-                        {/* <ComponentToPrint
-                            ref={componentRef}
-                            data={data}
-                        /> */}
                         <Button
                             className="text-white"
                             variant="warning"
-                            // onClick={handlePrintLabel}
-                            onClick={() => {
-                                printDom.onPrint();
-                            }}
+                            onClick={handlePrintLabel}
+                        // onClick={() => {
+                        //     printDom.onPrint();
+                        // }}
                         >
                             <TiPrinter />&nbsp; Print Label
                         </Button>
+                        <ComponentToPrint
+                            ref={componentRef}
+                            data={data}
+                        />
 
-
-                        <Print
+                        {/* <Print
                             ref={(myPrint: any) => printDom = myPrint} lazyRender isIframe={false}
                             title="G-Tech Barcode"
-                            otherStyle={`
-                            @media print and (width: 62mm) and (height: 29mm){
-                                display: block !important;
-                            }
-                            `}
+                        // otherStyle={`
+                        // @media print and (width: 62mm) and (height: 29mm){
+                        //     display: block !important;
+                        // }
+                        // `}
                         >
                             <div className={styles.printSource}>
                                 {(data || []).map((item: any, index: number) => (
 
-                                    <Fragment key={index}>
+                                    <div className="col-12" style={{ padding: 0, margin: 0 }} key={index}>
 
                                         {item.map((element: any, key: number) => (
 
-                                            <Fragment key={key}>
+                                            <div className="col-12" key={key} style={{ padding: 0, margin: 0 }} >
 
                                                 <Barcode barcode={element.Barcode} />
 
-                                            </Fragment>
+                                            </div>
 
                                         ))}
 
-                                    </Fragment>
+                                    </div>
 
                                 ))}
                             </div>
 
-                        </Print>
+                        </Print> */}
 
 
                     </div>
@@ -126,19 +124,19 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
                 {(data || []).map((item: any, index: number) => (
 
-                    <Fragment key={index}>
+                    <div className="col-12" style={{ padding: 0, margin: 0 }} key={index}>
 
                         {item.map((element: any, key: number) => (
 
-                            <Fragment key={key}>
+                            <div style={{ padding: 0, margin: 0 }} key={key}>
 
                                 <Barcode barcode={element.Barcode} />
 
-                            </Fragment>
+                            </div>
 
                         ))}
 
-                    </Fragment>
+                    </div>
 
                 ))}
 
@@ -163,19 +161,19 @@ export class ComponentToPrint extends PureComponent<ComponentToPrintProps, Compo
 
                 {(this.props.data || []).map((item: any, index: number) => (
 
-                    <Fragment key={index}>
+                    <div className="col-12" style={{ padding: 0, margin: 0 }} key={index}>
 
                         {item.map((element: any, key: number) => (
 
-                            <Fragment key={key}>
+                            <div className="col-12" key={key} style={{ padding: 0, margin: 0 }} >
 
                                 <Barcode barcode={element.Barcode} />
 
-                            </Fragment>
+                            </div>
 
                         ))}
 
-                    </Fragment>
+                    </div>
 
                 ))}
 

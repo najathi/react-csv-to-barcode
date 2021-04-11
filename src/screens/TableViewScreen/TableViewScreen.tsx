@@ -177,6 +177,7 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
                                 style={{ width: 100 }}
                                 value={count}
                                 onChange={handleChangeCount}
+                                min="1"
                             />
 
                             <Button
