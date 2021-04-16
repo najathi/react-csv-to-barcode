@@ -12,13 +12,17 @@ const Barcode: React.FC<BarcodeProps> = (props) => {
         options: {
             background: '#ffffff',
             width: 1.2,
-            height: 60,
+            height: 50,
         }
     });
 
     return (
 
-        <svg ref={inputRef} />
+        <>
+
+            <svg ref={inputRef} />
+
+        </>
 
     );
 };

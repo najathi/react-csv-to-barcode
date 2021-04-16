@@ -20,30 +20,30 @@
     margin-bottom: 1.2rem;
 }
 
-.printSource {
-    // display: none;
-}
+// .printSource {
+//     // display: none;
+// }
 
-@media print and (width: 62mm) and (height: 29mm) {
-    .printSource {
-        display: block !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-}
+// @media print and (width: 62mm) and (height: 29mm) {
+//     .printSource {
+//         display: block !important;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         flex-direction: column;
+//     }
+// }
 
-@media print and (width: 62mm) and (height: 29mm) {
-    @page {
-        .printSource {
-            display: block !important;
-        }
-    }
-}
+// @media print and (width: 62mm) and (height: 29mm) {
+//     @page {
+//         .printSource {
+//             display: block !important;
+//         }
+//     }
+// }
 
-@media print and (width: 62mm) and (height: 29mm) {
-    @page {
-        display: block !important;
-    }
-}
+// @media print and (width: 62mm) and (height: 29mm) {
+//     @page {
+//         display: block !important;
+//     }
+// }
