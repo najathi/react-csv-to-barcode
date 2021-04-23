@@ -15,4 +15,4 @@ G-Tech Barcode Generator (50mm x 25mm Label Size)
 	- Scale: 75 or 80
 	- Page per sheet: 1
 	- Margin Custome(in) Top: 0.20 Botton: 0.20 Left:0.20 Right:0.20
-	- uncheck the Print header and footer, Print Backgroud
+	- uncheck the Print header and footer, Print Background
