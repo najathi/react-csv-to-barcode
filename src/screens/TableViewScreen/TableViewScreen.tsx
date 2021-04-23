@@ -70,11 +70,6 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
                 sortable: true,
             },
             {
-                name: 'Name',
-                selector: 'Name',
-                sortable: true,
-            },
-            {
                 name: 'SKU',
                 selector: 'SKU',
                 sortable: true,
@@ -90,8 +85,8 @@ const TableViewScreen: React.FC<TableViewScreenProps> = (props) => {
                 sortable: true,
             },
             {
-                name: 'Prize',
-                selector: 'Prize',
+                name: 'Price',
+                selector: 'Price',
                 sortable: true,
             },
         ];

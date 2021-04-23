@@ -38,7 +38,8 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
     const handlePrintLabel = useReactToPrint({
         content: () => componentRef.current,
-        pageStyle: "@page { size: 62mm 29mm}",
+        // pageStyle: "@page { size: 62mm 29mm}",
+        pageStyle: "@page { size: 50mm 25mm}",
         // pageStyle: "@page { size: 38mm 25mm}",
         // pageStyle: "@page { size: 76.20mm 50.80mm}",
         // pageStyle: "@page { width: 76.20mm height:50.80mm}",
@@ -169,9 +170,12 @@ export class ComponentToPrint extends PureComponent<ComponentToPrintProps, Compo
 
                         {item.map((element: any, key: number) => (
 
-                            <div className="col-12" key={key} style={{ padding: 0, margin: 0 }} >
+                            <div className="col-12" key={key} >
+                                <span>{element.Name}</span><br />
 
-                                <Barcode barcode={element.Barcode} />
+                                <Barcode barcode={element.Barcode} /><br />
+
+                                <span>Rs. {element.Price}</span>
 
                             </div>
 
