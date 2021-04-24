@@ -65,33 +65,36 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                         <Button
                             className="text-white"
                             variant="warning"
-                            onClick={handlePrintLabel}
-                        // onClick={() => {
-                        //     printDom.onPrint();
-                        // }}
+                            // onClick={handlePrintLabel}
+                            onClick={() => {
+                                printDom.onPrint();
+                            }}
                         >
                             <TiPrinter />&nbsp; Print Label
                         </Button>
 
-                        {/* <Print
+                        <Print
                             ref={(myPrint: any) => printDom = myPrint} lazyRender isIframe={false}
                             title="G-Tech Barcode"
-                        // otherStyle={`
-                        // @media print and (width: 62mm) and (height: 29mm){
-                        //     display: block !important;
-                        // }
-                        // `}
                         >
-                            <div className={styles.printSource}>
+                            {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+
                                 {(data || []).map((item: any, index: number) => (
 
-                                    <div className="col-12" style={{ padding: 0, margin: 0 }} key={index}>
+                                    <div
+                                        style={{ display: 'flex', flexWrap: 'wrap' }}
+                                        key={index}
+                                    >
 
                                         {item.map((element: any, key: number) => (
 
-                                            <div className="col-12" key={key} style={{ padding: 0, margin: 0 }} >
+                                            <div style={{ flex: '50%' }} key={key}>
 
-                                                <Barcode barcode={element.Barcode} />
+                                                <span>{element.Name}</span><br />
+
+                                                <Barcode barcode={element.Barcode} /><br />
+
+                                                <span>Rs. {element.Price}</span>
 
                                             </div>
 
@@ -100,9 +103,27 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                                     </div>
 
                                 ))}
+                            </div> */}
+
+                            <div style={{ display: 'flex', flexWrap: 'wrap', width: 550, padding: 0, margin: 0 }}>
+
+                                {(selectedRow || []).map((element: any, index: number) => (
+
+                                    <div style={{ width: '50%', margin: '1.5rem 1rem 1rem 0', padding: 0, alignSelf: 'center' }} key={index}>
+
+                                        <p>{element.Name}</p><br />
+
+                                        <Barcode barcode={element.Barcode} />
+
+                                        <p>Rs. {element.Price}</p>
+
+                                    </div>
+
+                                ))}
+
                             </div>
 
-                        </Print> */}
+                        </Print>
 
 
                     </div>
@@ -120,15 +141,15 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
 
             </div>
 
-            {/* <div className="row">
+            {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
 
                 {(data || []).map((item: any, index: number) => (
 
-                    <div className="col-12" style={{ padding: 0, margin: 0 }} key={index}>
+                    <div style={{ display: 'flex', flexDirection: 'column', width: '106mm', height: '29mm' }} key={index}>
 
                         {item.map((element: any, key: number) => (
 
-                            <div style={{ padding: 0, margin: 0 }} key={key}>
+                            <div style={{ width: '50mm', height: '25mm' }} key={key}>
 
                                 <Barcode barcode={element.Barcode} />
 
@@ -147,7 +168,7 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                 data={data}
             />
 
-        </div>
+        </div >
 
     );
 };
