@@ -76,6 +76,9 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                         <Print
                             ref={(myPrint: any) => printDom = myPrint} lazyRender isIframe={false}
                             title="G-Tech Barcode"
+                            otherStyle={`
+                                
+                            `}
                         >
                             {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
 
@@ -105,17 +108,17 @@ const BarcodeScreen: React.FC<BarcodeScreenProps> = (props) => {
                                 ))}
                             </div> */}
 
-                            <div style={{ display: 'flex', flexWrap: 'wrap', width: 550, padding: 0, margin: 0 }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', width: 550 }}>
 
                                 {(selectedRow || []).map((element: any, index: number) => (
 
-                                    <div style={{ width: '50%', margin: '1.5rem 1rem 1rem 0', padding: 0, alignSelf: 'center' }} key={index}>
+                                    <div style={{ width: '50%', margin: '1.5rem 0 1rem 0' }} key={index}>
 
-                                        <p>{element.Name}</p><br />
+                                        <span>{element.Name}</span><br />
 
-                                        <Barcode barcode={element.Barcode} />
+                                        <Barcode barcode={element.Barcode} /><br />
 
-                                        <p>Rs. {element.Price}</p>
+                                        <span>Rs. {element.Price}</span>
 
                                     </div>
 
